@@ -71,18 +71,13 @@ const Todos = (props) => {
                         )
                     }
                 </Modal>
-
-
             </View>
         </>
-
-
     )
 }
-
 export default Todos;
 
-
+// Style sheet
 const styles = StyleSheet.create({
     container: {
         paddingTop: 50,

@@ -11,6 +11,8 @@ export default function App() {
   );
 }
 
+
+// Style sheet
 const styles = StyleSheet.create({
   AppContainer: {
     position: 'relative',
