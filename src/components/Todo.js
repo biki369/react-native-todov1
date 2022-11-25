@@ -23,7 +23,7 @@ const Todo = (props) => {
         android_ripple={styles.pressBtn}
         style={({pressed})=>pressed && styles.pressBtn}
       >
-        <Text style={{ color: "#fff", padding: 8, }}>{props.todoText}</Text>
+        <Text style={{ color: "#fff", padding: 13, }}>{props.todoText}</Text>
       </Pressable>
     </View>
 
@@ -34,6 +34,7 @@ export default Todo
 
 const styles = StyleSheet.create({
   pressBtn: {
-    color: '#210644'
+    color: '#210644',
+    opacity: 0.6,
   }
 })

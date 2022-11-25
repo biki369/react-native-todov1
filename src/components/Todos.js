@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, StyleSheet, Text, TextInput, View, ScrollView, FlatList, Pressable, Modal } from 'react-native';
+import { Button, StyleSheet, Text, TextInput, View, ScrollView, FlatList, Pressable, Modal, Image } from 'react-native';
 import Todo from './Todo';
 
 const Todos = (props) => {
@@ -20,6 +20,7 @@ const Todos = (props) => {
             { text: tasks, id: Math.random().toString() },
         ])
         setTasks('');
+        setModalOn(false)
     };
 
     const removeTasks = (id) => {
@@ -28,18 +29,15 @@ const Todos = (props) => {
 
 
     return (
-        <View style={styles.container}>
-            <Modal>
-                <View style={styles.inputDev}>
-                    <TextInput style={styles.textInput} placeholder='Write your today task 📝' onChangeText={inputHandler} value={tasks} />
-                    <Button title='Add Task' style={styles.btn} onPress={addTaskHandler} />
-                </View>
-            </Modal>
-
+        <>
+            <Button title='add new task' color="#5e0acc" onPress={() => setModalOn(true)} />
             <View style={styles.allTasks}>
-                <Text style={{ margin: 3 }}>{showTask.length < 1 ? "No task here  to show 😋" : "Today Task ..... 😅"}</Text>
+                <Text style={{ margin: 3,color: 'white'}}>{showTask.length < 1 ? "No task here  to show 😋" : "Today Task ..... 😅"}</Text>
 
-                <FlatList
+                    {
+                        showTask.length <1? <Image source={require('../../assets/img/task0.png')}
+                    style={styles.taskImg} />:
+                    <FlatList
                     data={showTask}
                     renderItem={(itemData) => {
                         return (
@@ -52,10 +50,32 @@ const Todos = (props) => {
                     keyExtractor={(item, index) => {
                         return item.id;
                     }}
-
                 />
+                    }
+                  
             </View>
-        </View>
+            <View style={styles.container}>
+                <Modal visible={modalOn} animationType='slide'>
+                    {
+                        modalOn && (
+                            <View style={styles.inputDev}>
+                                <Image source={require('../../assets/img/target0.png')}
+                                    style={styles.targetImg} />
+                                <TextInput style={styles.textInput} placeholder='Write your today task 📝' onChangeText={inputHandler} value={tasks} />
+                                <View style={styles.btnDiv}>
+                                    <View style={styles.btn}><Button color="#150638" title='Add Task' onPress={addTaskHandler} /></View>
+                                    <View style={styles.btn}><Button title='Cancel' color="#38061b" style={styles.btn} onPress={() => (setModalOn(false))} /></View>
+
+                                </View>
+                            </View>
+                        )
+                    }
+                </Modal>
+
+
+            </View>
+        </>
+
 
     )
 }
@@ -66,31 +86,55 @@ export default Todos;
 const styles = StyleSheet.create({
     container: {
         paddingTop: 50,
-        paddingHorizontal: 16,
+        paddingHorizontal: 3,
         flex: 1,
     },
     inputDev: {
         flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 24,
-        borderBottomWidth: 1,
-        borderBottomColor: "#ccc",
+        padding: 16,
+        backgroundColor: "#311b6b"
+    },
+    taskImg: {
+        width: 363, height: 363, 
+        marginTop: 13,
+        alignItems: 'center',
+        marginLeft: 26,
+    },
+    targetImg: {
+        width: 163, height: 163, 
+        marginBottom: 13,
+        borderWidth: 1,
+        padding: 1,
+        boderColor: "#ccc",
     },
     textInput: {
-        borderWidth: 1,
-        borderColor: "#5e0acc",
-        borderRadius: 6,
-        width: '70%',
+        // borderWidth: 1,
+        // borderColor: "#5e0acc",
+        backgroundColor: "#fff",
+        borderRadius: 3,
+        width: '100%',
         marginRight: 8,
-        padding: 6,
+        // padding: 6,
+        paddingHorizontal:6,
+        paddingVertical: 16,
+        outline:'none'
+    },
+    btnDiv: {
+        flexDirection: 'row',
+        marginTop: 16,
     },
     btn: {
-        backgroundColor: "#5e0acc",
+        //btn can't change so view own btn
+        width: '30%',
+        color: "#5e0acc",
+        marginHorizontal: 8,
     },
     allTasks: {
         flex: 4,
+        // justifyContent: 'center',
+        // alignItems: 'center',
     },
     taskItems: {
         margin: 8,
